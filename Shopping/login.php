@@ -5,7 +5,6 @@ $mysql_password = "";
 $mysql_database = "shopping";
 $bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
 mysqli_select_db($bd,$mysql_database) or die("Could not select database");
-
 ?>
 
 <?php
@@ -25,8 +24,10 @@ if($query)
 	echo "<script>alert('You are successfully register');</script>";
 }
 else{
-echo "<script>alert('Not register something went worng');</script>";
+	
+	echo "<script>alert('Not register something went worng');</script>";
 }
+
 }// Code for User login
 if(isset($_POST['login']))
 {
@@ -62,10 +63,7 @@ $_SESSION['errmsg']="Invalid email id or Password";
 exit();
 }
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -128,10 +126,7 @@ return true;
 </script>
 	</head>
     <body class="cnt-home">
-	
-		
-	
-		<!-- ============================================== HEADER ============================================== -->
+<!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
 
 	<!-- ============================================== TOP MENU ============================================== -->

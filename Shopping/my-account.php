@@ -1,6 +1,15 @@
 <?php
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "shopping";
+$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
+mysqli_select_db($bd,$mysql_database) or die("Could not select database");
+?>
+
+<?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 include('includes/config.php');
 if(strlen($_SESSION['login'])==0)
     {   
@@ -11,7 +20,7 @@ else{
 	{
 		$name=$_POST['name'];
 		$contactno=$_POST['contactno'];
-		$query=mysql_query("update users set name='$name',contactno='$contactno' where id='".$_SESSION['id']."'");
+		$query=mysqli_query("update users set name='$name',contactno='$contactno' where id='".$_SESSION['id']."'");
 		if($query)
 		{
 echo "<script>alert('Your info has been updated');</script>";
@@ -25,11 +34,11 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
 if(isset($_POST['submit']))
 {
-$sql=mysql_query("SELECT password FROM  users where password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
+$sql=mysqli_query($bd,"SELECT password FROM  users where password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
 $num=mysql_fetch_array($sql);
 if($num>0)
 {
- $con=mysql_query("update students set password='".md5($_POST['newpass'])."', updationDate='$currentTime' where id='".$_SESSION['id']."'");
+ $con=mysqli_query($bd,"update students set password='".md5($_POST['newpass'])."', updationDate='$currentTime' where id='".$_SESSION['id']."'");
 echo "<script>alert('Password Changed Successfully !!');</script>";
 }
 else
@@ -162,30 +171,27 @@ return true;
 				<div class="col-md-12 col-sm-12 already-registered-login">
 
 <?php
-$query=mysql_query("select * from users where id='".$_SESSION['id']."'");
-while($row=mysql_fetch_array($query))
+$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
+while($row=mysqli_fetch_array($query))
 {
 ?>
 
-					<form class="register-form" role="form" method="post">
+<form class="register-form" role="form" method="post">
 <div class="form-group">
-					    <label class="info-title" for="name">Name<span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" value="<?php echo $row['name'];?>" id="name" name="name" required="required">
-					  </div>
-
-
-
-						<div class="form-group">
-					    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-			 <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" value="<?php echo $row['email'];?>" readonly>
-					  </div>
-					  <div class="form-group">
-					    <label class="info-title" for="Contact No.">Contact No. <span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" value="<?php echo $row['contactno'];?>"  maxlength="10">
-					  </div>
-					  <button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
-					</form>
-					<?php } ?>
+	<label class="info-title" for="name">Name<span>*</span></label>
+	<input type="text" class="form-control unicase-form-control text-input" value="<?php echo $row['name'];?>" id="name" name="name" required="required">
+</div>
+<div class="form-group">
+	<label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
+	<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" value="<?php echo $row['email'];?>" readonly>
+ </div>
+<div class="form-group">
+	<label class="info-title" for="Contact No.">Contact No. <span>*</span></label>
+	<input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" value="<?php echo $row['contactno'];?>"  maxlength="10">
+</div>
+	 <button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
+</form>
+<?php } ?>
 				</div>	
 				<!-- already-registered-login -->		
 

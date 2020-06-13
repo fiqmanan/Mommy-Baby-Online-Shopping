@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS 'admin' (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate`) VALUES
+INSERT INTO 'admin' ('id', 'username', 'password', 'creationDate', 'updationDate') VALUES
 (1, 'admin', '5c428d8875d2948607f3e3fe134d71b4', '2017-01-24 16:21:18', '25-01-2017 12:05:43 AM');
 
 -- --------------------------------------------------------
@@ -47,19 +47,19 @@ INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
-  `id` int(11) NOT NULL,
-  `categoryName` varchar(255) NOT NULL,
-  `categoryDescription` longtext NOT NULL,
-  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updationDate` varchar(255) NOT NULL
+CREATE TABLE IF NOT EXISTS 'category' (
+  'id' int(11) NOT NULL,
+  'categoryName' varchar(255) NOT NULL,
+  'categoryDescription' longtext NOT NULL,
+  'creationDate' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  'updationDate' varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `categoryName`, `categoryDescription`, `creationDate`, `updationDate`) VALUES
+INSERT INTO 'category' ('id', 'categoryName', 'categoryDescription', 'creationDate', 'updationDate') VALUES
 (3, 'Books', 'Test anuj', '2017-01-24 19:17:37', '30-01-2017 12:22:24 AM'),
 (4, 'Electronics', 'Electronic Products', '2017-01-24 19:19:32', ''),
 (5, 'Furniture', 'test', '2017-01-24 19:19:54', ''),
@@ -71,21 +71,21 @@ INSERT INTO `category` (`id`, `categoryName`, `categoryDescription`, `creationDa
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
-  `id` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `productId` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `orderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `paymentMethod` varchar(50) DEFAULT NULL,
-  `orderStatus` varchar(55) DEFAULT NULL
+CREATE TABLE IF NOT EXISTS 'orders' (
+  'id' int(11) NOT NULL,
+  'userId' int(11) NOT NULL,
+  'productId' varchar(255) NOT NULL,
+  'quantity' int(11) NOT NULL,
+  'orderDate' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  'paymentMethod' varchar(50) DEFAULT NULL,
+  'orderStatus' varchar(55) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `userId`, `productId`, `quantity`, `orderDate`, `paymentMethod`, `orderStatus`) VALUES
+INSERT INTO 'orders' ('id', 'userId', 'productId', 'quantity', 'orderDate', 'paymentMethod', 'orderStatus') VALUES
 (1, 1, '3', 1, '2017-03-07 19:32:57', 'COD', NULL),
 (3, 1, '4', 1, '2017-03-10 19:43:04', 'Debit / Credit card', 'Delivered'),
 (4, 1, '17', 1, '2017-03-08 16:14:17', 'COD', 'in Process'),
@@ -98,19 +98,19 @@ INSERT INTO `orders` (`id`, `userId`, `productId`, `quantity`, `orderDate`, `pay
 -- Table structure for table `ordertrackhistory`
 --
 
-CREATE TABLE IF NOT EXISTS `ordertrackhistory` (
-  `id` int(11) NOT NULL,
-  `orderId` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `remark` mediumtext NOT NULL,
-  `postingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS 'ordertrackhistory' (
+  'id' int(11) NOT NULL,
+  'orderId' int(11) NOT NULL,
+  'status' varchar(255) NOT NULL,
+  'remark' mediumtext NOT NULL,
+  'postingDate' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ordertrackhistory`
 --
 
-INSERT INTO `ordertrackhistory` (`id`, `orderId`, `status`, `remark`, `postingDate`) VALUES
+INSERT INTO 'ordertrackhistory' ('id', 'orderId', 'status', 'remark', 'postingDate') VALUES
 (1, 3, 'in Process', 'Order has been Shipped.', '2017-03-10 19:36:45'),
 (2, 1, 'Delivered', 'Order Has been delivered', '2017-03-10 19:37:31'),
 (3, 3, 'Delivered', 'Product delivered successfully', '2017-03-10 19:43:04'),
@@ -122,23 +122,23 @@ INSERT INTO `ordertrackhistory` (`id`, `orderId`, `status`, `remark`, `postingDa
 -- Table structure for table `productreviews`
 --
 
-CREATE TABLE IF NOT EXISTS `productreviews` (
-  `id` int(11) NOT NULL,
-  `productId` int(11) NOT NULL,
-  `quality` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `value` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `summary` varchar(255) NOT NULL,
-  `review` longtext NOT NULL,
-  `reviewDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS 'productreviews' (
+  'id' int(11) NOT NULL,
+  'productId' int(11) NOT NULL,
+  'quality' int(11) NOT NULL,
+  'price' int(11) NOT NULL,
+  'value' int(11) NOT NULL,
+  'name' varchar(255) NOT NULL,
+  'summary' varchar(255) NOT NULL,
+  'review' longtext NOT NULL,
+  'reviewDate' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `productreviews`
 --
 
-INSERT INTO `productreviews` (`id`, `productId`, `quality`, `price`, `value`, `name`, `summary`, `review`, `reviewDate`) VALUES
+INSERT INTO 'productreviews' ('id', 'productId', 'quality', 'price', 'value', 'name', 'summary', 'review', 'reviewDate') VALUES
 (2, 3, 4, 5, 5, 'Anuj Kumar', 'BEST PRODUCT FOR ME :)', 'BEST PRODUCT FOR ME :)', '2017-02-26 20:43:57'),
 (3, 3, 3, 4, 3, 'Sarita pandey', 'Nice Product', 'Value for money', '2017-02-26 20:52:46'),
 (4, 3, 3, 4, 3, 'Sarita pandey', 'Nice Product', 'Value for money', '2017-02-26 20:59:19');
@@ -149,7 +149,7 @@ INSERT INTO `productreviews` (`id`, `productId`, `quality`, `price`, `value`, `n
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
+CREATE TABLE IF NOT EXISTS 'products' (
   `id` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `subCategory` int(11) NOT NULL,

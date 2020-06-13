@@ -12,4 +12,4 @@
  <li><a href="Register.php">Register</a></li>
       <li><a href="Contact.php">Contact</a></li>
     </ul>
-  </div>
+</div>
