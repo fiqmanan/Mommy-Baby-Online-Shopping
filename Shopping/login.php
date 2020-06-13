@@ -10,8 +10,8 @@ mysqli_select_db($bd,$mysql_database) or die("Could not select database");
 
 <?php
 session_start();
-//error_reporting(0);
-//include('includes/config.php');
+error_reporting(0);
+include('includes/config.php');
 // Code user Registration
 if(isset($_POST['submit']))
 {
