@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 include('includes/config.php');
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
@@ -382,7 +382,7 @@ while ($row=mysql_fetch_array($ret))
 <?php }?>
 
 	
-			                   	</div>
+	</div>
 	                   </section>
 					</div>
 					<div class="col-md-6">
@@ -394,12 +394,8 @@ $ret=mysql_query("select * from products where category=4 and subCategory=6");
 while ($row=mysql_fetch_array($ret)) 
 {
 ?>
-
-
-
-		<div class="item item-carousel">
-			<div class="products">
-				
+	<div class="item item-carousel">
+		<div class="products">			
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
@@ -452,11 +448,7 @@ while ($row=mysql_fetch_array($ret))
 ?>
 				<div class="item">
 					<div class="products">
-
-
-
-
-												<div class="product">
+						<div class="product">
 							<div class="product-micro">
 								<div class="row product-micro-row">
 									<div class="col col-xs-6">
@@ -514,7 +506,6 @@ while ($row=mysql_fetch_array($ret))
 	<script src="assets/js/scripts.js"></script>
 
 	<!-- For demo purposes – can be removed on production -->
-	
 	<script src="switchstylesheet/switchstylesheet.js"></script>
 	
 	<script>
