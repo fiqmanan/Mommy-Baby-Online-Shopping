@@ -1,6 +1,6 @@
-
 <?php
 session_start();
+error_reporting(0);
 include('include/config.php');
 if(strlen($_SESSION['alogin'])==0)
 	{	
@@ -13,11 +13,11 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
 if(isset($_POST['submit']))
 {
-$sql=mysql_query("SELECT password FROM  admin where password='".md5($_POST['password'])."' && username='".$_SESSION['alogin']."'");
-$num=mysql_fetch_array($sql);
+$sql=mysqli_query("SELECT password FROM  admin where password='".md5($_POST['password'])."' && username='".$_SESSION['alogin']."'");
+$num=mysqli_fetch_array($sql);
 if($num>0)
 {
- $con=mysql_query("update admin set password='".md5($_POST['newpassword'])."', updationDate='$currentTime' where username='".$_SESSION['alogin']."'");
+ $con=mysqli_query("update admin set password='".md5($_POST['newpassword'])."', updationDate='$currentTime' where username='".$_SESSION['alogin']."'");
 $_SESSION['msg']="Password Changed Successfully !!";
 }
 else

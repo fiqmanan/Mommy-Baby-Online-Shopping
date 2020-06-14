@@ -1,16 +1,25 @@
 <?php
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "shopping";
+$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
+mysqli_select_db($bd,$mysql_database) or die("Could not select database");
+?>
+
+<?php
 session_start();
-error_reporting(0);
-include('includes/config.php');
+//error_reporting(0);
+//include('includes/config.php');
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
 	if(isset($_SESSION['cart'][$id])){
 		$_SESSION['cart'][$id]['quantity']++;
 	}else{
 		$sql_p="SELECT * FROM products WHERE id={$id}";
-		$query_p=mysql_query($sql_p);
-		if(mysql_num_rows($query_p)!=0){
-			$row_p=mysql_fetch_array($query_p);
+		$query_p=mysqli_query($sql_p);
+		if(mysqli_num_rows($query_p)!=0){
+			$row_p=mysqli_fetch_array($query_p);
 			$_SESSION['cart'][$row_p['id']]=array("quantity" => 1, "price" => $row_p['productPrice']);
 			header('location:index.php');
 		}else{
@@ -176,8 +185,8 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 					<div class="product-slider">
 						<div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="4">
 <?php
-$ret=mysql_query("select * from products");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products");
+while ($row=mysqli_fetch_array($ret)) 
 {
 	# code...
 
@@ -230,8 +239,8 @@ while ($row=mysql_fetch_array($ret))
 					<div class="product-slider">
 						<div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
 		<?php
-$ret=mysql_query("select * from products where category=3");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products where category=3");
+while ($row=mysqli_fetch_array($ret)) 
 {
 	# code...
 
@@ -287,8 +296,8 @@ while ($row=mysql_fetch_array($ret))
 					<div class="product-slider">
 						<div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
 		<?php
-$ret=mysql_query("select * from products where category=5");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products where category=5");
+while ($row=mysqli_fetch_array($ret)) 
 {
 ?>
 
@@ -344,8 +353,8 @@ while ($row=mysql_fetch_array($ret))
 	                   	<div class="owl-carousel homepage-owl-carousel custom-carousel outer-top-xs owl-theme" data-item="2">
 	   
 <?php
-$ret=mysql_query("select * from products where category=4 and subCategory=4");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products where category=4 and subCategory=4");
+while ($row=mysqli_fetch_array($ret)) 
 {
 ?>
 
@@ -390,8 +399,8 @@ while ($row=mysql_fetch_array($ret))
 							<h3 class="section-title">Laptops</h3>
 		                   	<div class="owl-carousel homepage-owl-carousel custom-carousel outer-top-xs owl-theme" data-item="2">
 	<?php
-$ret=mysql_query("select * from products where category=4 and subCategory=6");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products where category=4 and subCategory=6");
+while ($row=mysqli_fetch_array($ret)) 
 {
 ?>
 	<div class="item item-carousel">
@@ -439,8 +448,8 @@ while ($row=mysql_fetch_array($ret))
 		<h3 class="section-title">Fashion</h3>
 		<div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
 			<?php
-$ret=mysql_query("select * from products where category=6");
-while ($row=mysql_fetch_array($ret)) 
+$ret=mysqli_query("select * from products where category=6");
+while ($row=mysqli_fetch_array($ret)) 
 {
 	# code...
 
