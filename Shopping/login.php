@@ -120,17 +120,14 @@ return true;
     <body class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
-
-	<!-- ============================================== TOP MENU ============================================== -->
+<!-- ============================================== TOP MENU ============================================== -->
 <?php include('includes/top-header.php');?>
 <!-- ============================================== TOP MENU : END ============================================== -->
 <?php include('includes/main-header.php');?>
 	<!-- ============================================== NAVBAR ============================================== -->
 <?php include('includes/menu-bar.php');?>
 <!-- ============================================== NAVBAR : END ============================================== -->
-
 </header>
-
 <!-- ============================================== HEADER : END ============================================== -->
 <div class="breadcrumb">
 	<div class="container">
@@ -153,12 +150,8 @@ return true;
 	<p class="">Hello, Welcome to your account.</p>
 	<form class="register-form outer-top-xs" method="post">
 	<span style="color:red;" >
-<?php
-echo htmlentities($_SESSION['errmsg']);
-?>
-<?php
-echo htmlentities($_SESSION['errmsg']="");
-?>
+<?phpecho htmlentities($_SESSION['errmsg']);?>
+<?phpecho htmlentities($_SESSION['errmsg']="");?>
 	</span>
 		<div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
@@ -224,7 +217,7 @@ echo htmlentities($_SESSION['errmsg']="");
 	</div>
 </div>	
 <!-- create a new account -->			</div><!-- /.row -->
-		</div>
+</div>
 <?php include('includes/brands-slider.php');?>
 </div>
 </div>
@@ -262,9 +255,5 @@ echo htmlentities($_SESSION['errmsg']="");
 		   $('.show-theme-options').delay(2000).trigger('click');
 		});
 	</script>
-	<!-- For demo purposes – can be removed on production : End -->
-
-	
-
 </body>
 </html>
