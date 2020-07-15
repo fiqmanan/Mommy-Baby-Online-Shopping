@@ -164,9 +164,7 @@ var ds_monthnames = [
 'July', 'August', 'September', 'October', 'November', 'December'
 ]; // You can translate it for your language.
 
-var ds_daynames = [
-'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-]; // You can translate it for your language.
+var ds_daynames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // Calendar template
 function ds_template_main_above(t) {

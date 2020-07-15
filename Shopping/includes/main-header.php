@@ -36,10 +36,11 @@
         </div>
     </form>
 </div><!-- /.search-area -->
-<!-- ============================================================= SEARCH AREA : END ============================================================= -->				</div><!-- /.top-search-holder -->
+<!-- ============================================================= SEARCH AREA : END ============================================================= -->				
+</div><!-- /.top-search-holder -->
 
-				<div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row">
-					<!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
+<div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row">
+<!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 <?php
 if(!empty($_SESSION['cart'])){
 	?>
@@ -137,10 +138,6 @@ if(!empty($_SESSION['cart'])){
 		    </div>
 		</a>
 		<ul class="dropdown-menu">
-
-
-
-
 			<li>
 				<div class="cart-item product-summary">
 					<div class="row">

@@ -1,4 +1,13 @@
 <?php
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "shopping";
+$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
+mysqli_select_db($bd,$mysql_database) or die("Could not select database");
+
+?>
+<?php
 session_start();
 //error_reporting(0);
 include('includes/config.php');
@@ -14,7 +23,7 @@ else{
 		$bstate=$_POST['bilingstate'];
 		$bcity=$_POST['billingcity'];
 		$bpincode=$_POST['billingpincode'];
-		$query=mysql_query("update users set billingAddress='$baddress',billingState='$bstate',billingCity='$bcity',billingPincode='$bpincode' where id='".$_SESSION['id']."'");
+		$query=mysqli_query($bd,"update users set billingAddress='$baddress',billingState='$bstate',billingCity='$bcity',billingPincode='$bpincode' where id='".$_SESSION['id']."'");
 		if($query)
 		{
 echo "<script>alert('Billing Address has been updated');</script>";
@@ -29,7 +38,7 @@ echo "<script>alert('Billing Address has been updated');</script>";
 		$sstate=$_POST['shippingstate'];
 		$scity=$_POST['shippingcity'];
 		$spincode=$_POST['shippingpincode'];
-		$query=mysql_query("update users set shippingAddress='$saddress',shippingState='$sstate',shippingCity='$scity',shippingPincode='$spincode' where id='".$_SESSION['id']."'");
+		$query=mysqli_query($bd,"update users set shippingAddress='$saddress',shippingState='$sstate',shippingCity='$scity',shippingPincode='$spincode' where id='".$_SESSION['id']."'");
 		if($query)
 		{
 echo "<script>alert('Shipping Address has been updated');</script>";
@@ -130,41 +139,36 @@ echo "<script>alert('Shipping Address has been updated');</script>";
 			<div class="row">		
 				<div class="col-md-12 col-sm-12 already-registered-login">
 
-<?php
-$query=mysql_query("select * from users where id='".$_SESSION['id']."'");
-while($row=mysql_fetch_array($query))
-{
-?>
+	<?php
+	$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
+	//$query = mysqli_query("select * from users where id=1");
+	while($row=mysqli_fetch_array($query))
+	{
+	?>
+<form class="register-form" role="form" method="post">
+	<div class="form-group">
+		<label class="info-title" for="Billing Address">Billing Address<span>*</span></label>
+		<textarea class="form-control unicase-form-control text-input" " name="billingaddress" required="required"><?php echo $row['billingAddress'];?></textarea>
+	</div>
+	<div class="form-group">
+		<label class="info-title" for="Billing State ">Billing State  <span>*</span></label>
+		<input type="text" class="form-control unicase-form-control text-input" id="bilingstate" name="bilingstate" value="<?php echo $row['billingState'];?>" required>
+	</div>
+	<div class="form-group">
+		<label class="info-title" for="Billing City">Billing City <span>*</span></label>
+		<input type="text" class="form-control unicase-form-control text-input" id="billingcity" name="billingcity" required="required" value="<?php echo $row['billingCity'];?>" >
+	</div>
+ 	<div class="form-group">
+		<label class="info-title" for="Billing Pincode">Billing Pincode <span>*</span></label>
+		<input type="text" class="form-control unicase-form-control text-input" id="billingpincode" name="billingpincode" required="required" value="<?php echo $row['billingPincode'];?>" >
+	</div>
+	<button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
+</form>
+	<?php } ?>
+	</div>	
+	<!-- already-registered-login -->		
 
-					<form class="register-form" role="form" method="post">
-<div class="form-group">
-					    <label class="info-title" for="Billing Address">Billing Address<span>*</span></label>
-					    <textarea class="form-control unicase-form-control text-input" " name="billingaddress" required="required"><?php echo $row['billingAddress'];?></textarea>
-					  </div>
-
-
-
-						<div class="form-group">
-					    <label class="info-title" for="Billing State ">Billing State  <span>*</span></label>
-			 <input type="text" class="form-control unicase-form-control text-input" id="bilingstate" name="bilingstate" value="<?php echo $row['billingState'];?>" required>
-					  </div>
-					  <div class="form-group">
-					    <label class="info-title" for="Billing City">Billing City <span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" id="billingcity" name="billingcity" required="required" value="<?php echo $row['billingCity'];?>" >
-					  </div>
- <div class="form-group">
-					    <label class="info-title" for="Billing Pincode">Billing Pincode <span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" id="billingpincode" name="billingpincode" required="required" value="<?php echo $row['billingPincode'];?>" >
-					  </div>
-
-
-					  <button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
-					</form>
-					<?php } ?>
-				</div>	
-				<!-- already-registered-login -->		
-
-			</div>			
+	</div>			
 		</div>
 		<!-- panel-body  -->
 
@@ -172,25 +176,24 @@ while($row=mysql_fetch_array($query))
 </div>
 <!-- checkout-step-01  -->
 					    <!-- checkout-step-02  -->
-					  	<div class="panel panel-default checkout-step-02">
-						    <div class="panel-heading">
-						      <h4 class="unicase-checkout-title">
-						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseTwo">
-						          <span>2</span>Shipping Address
-						        </a>
-						      </h4>
-						    </div>
-						    <div id="collapseTwo" class="panel-collapse collapse">
-						      <div class="panel-body">
-						     
+	<div class="panel panel-default checkout-step-02">
+		<div class="panel-heading">
+		<h4 class="unicase-checkout-title">
+			<a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseTwo">
+				 <span>2</span>Shipping Address
+			</a>
+		</h4>
+	</div>
+	<div id="collapseTwo" class="panel-collapse collapse">
+		<div class="panel-body">			     
 				<?php
-$query=mysql_query("select * from users where id='".$_SESSION['id']."'");
-while($row=mysql_fetch_array($query))
-{
-?>
+				$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
+					while($row=mysqli_fetch_array($query))
+					{
+				?>
 
 					<form class="register-form" role="form" method="post">
-<div class="form-group">
+					<div class="form-group">
 					    <label class="info-title" for="Shipping Address">Shipping Address<span>*</span></label>
 					    <textarea class="form-control unicase-form-control text-input" " name="shippingaddress" required="required"><?php echo $row['shippingAddress'];?></textarea>
 					  </div>
@@ -205,7 +208,7 @@ while($row=mysql_fetch_array($query))
 					    <label class="info-title" for="Billing City">Shipping City <span>*</span></label>
 					    <input type="text" class="form-control unicase-form-control text-input" id="shippingcity" name="shippingcity" required="required" value="<?php echo $row['shippingCity'];?>" >
 					  </div>
- <div class="form-group">
+ 			<div class="form-group">
 					    <label class="info-title" for="Billing Pincode">Shipping Pincode <span>*</span></label>
 					    <input type="text" class="form-control unicase-form-control text-input" id="shippingpincode" name="shippingpincode" required="required" value="<?php echo $row['shippingPincode'];?>" >
 					  </div>
@@ -214,10 +217,6 @@ while($row=mysql_fetch_array($query))
 					  <button type="submit" name="shipupdate" class="btn-upper btn btn-primary checkout-page-button">Update</button>
 					</form>
 					<?php } ?>
-
-
-
-
 						      </div>
 						    </div>
 					  	</div>

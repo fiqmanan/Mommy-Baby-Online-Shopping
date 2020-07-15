@@ -35,7 +35,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 if(isset($_POST['submit']))
 {
 $sql=mysqli_query($bd,"SELECT password FROM  users where password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
-$num=mysql_fetch_array($sql);
+$num=mysqli_fetch_array($sql);
 if($num>0)
 {
  $con=mysqli_query($bd,"update students set password='".md5($_POST['newpass'])."', updationDate='$currentTime' where id='".$_SESSION['id']."'");
