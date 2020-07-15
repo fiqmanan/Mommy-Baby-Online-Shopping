@@ -1,5 +1,5 @@
 <?php 
-//session_start();
+session_start();
 ?>
 
 <div class="top-bar animate-dropdown">

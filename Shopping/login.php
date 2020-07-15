@@ -99,7 +99,7 @@
 <div class="col-md-6 col-sm-6 create-new-account">
 	<h4 class="checkout-subtitle">create a new account</h4>
 	<p class="text title-tag-line">Create your own Shopping account.</p>
-	<form class="register-form outer-top-xs" role="form" method="post" name="register" onSubmit="return valid();">
+	<form class="register-form outer-top-xs" role="form" method="post" name="formRegister" id="formRegister">
 <div class="form-group">
 	    	<label class="info-title" for="fullname">Full Name <span>*</span></label>
 	    	<input type="text" class="form-control unicase-form-control text-input" id="fullname" name="fullname" required="required">
@@ -120,36 +120,17 @@
 	    	<label class="info-title" for="password">Password. <span>*</span></label>
 	    	<input type="password" class="form-control unicase-form-control text-input" id="password" name="password"  required >
 	  	</div>
-
-<div class="form-group">
-	    	<label class="info-title" for="confirmpassword">Confirm Password. <span>*</span></label>
-	    	<input type="password" class="form-control unicase-form-control text-input" id="confirmpassword" name="confirmpassword" required >
-	  	</div>
-
-
 	  	<button type="submit" name="submit" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
-	</form>
-	<span class="checkout-subtitle outer-top-xs">Sign Up Today And You'll Be Able To :  </span>
-	<div class="checkbox">
-	  	<label class="checkbox">
-		  	Speed your way through the checkout.
-		</label>
-		<label class="checkbox">
-		Track your orders easily.
-		</label>
-		<label class="checkbox">
- 	Keep a record of all your purchases.
-		</label>
-	</div>
+	</form>`
 </div>	
 		</div><!-- /.row -->
 </div>
 <!-- create a new account 	
-<?php include('includes/brands-slider.php');?>-->
+-->
 </div>
 </div>
 <!--
-<?php include('includes/footer.php');?>-->
+-->
 	<script src="assets/js/jquery-1.11.1.min.js"></script>
 	
 	<script src="assets/js/bootstrap.min.js"></script>
@@ -199,6 +180,35 @@ $(function () {
 });
 
 //======================RESTFUL API REGISTER===============================
+$(function () {
+	 $('#formRegister').submit(function (event) {
+		event.preventDefault();
+
+		var formData = $(this).serialize();
+		console.log(formData);  
+
+		$.ajax({
+			type: "POST",
+			url: "http://localhost/Mommy-Baby-Online-Shopping/api2/register",
+			data: formData,
+			dataType: "json",
+
+			success: function (data, status, xhr) {
+			if(data.status=="passed"){
+			alert("Successfully Register the User");
+			window.location.replace("login.php");
+			}
+			else{
+				alert('Not Register, Something when wrong');	
+			}
+			},
+			error: function () {
+				alert('ef fef error' + status.log);
+			}
+		});
+	});
+			   
+});
 </script>
 </body>
 </html>
