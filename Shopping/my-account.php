@@ -1,52 +1,10 @@
 <?php
-$mysql_hostname = "localhost";
-$mysql_user = "root";
-$mysql_password = "";
-$mysql_database = "shopping";
-$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
-mysqli_select_db($bd,$mysql_database) or die("Could not select database");
-?>
-
-<?php
 session_start();
 //error_reporting(0);
-include('includes/config.php');
 if(strlen($_SESSION['login'])==0)
     {   
-header('location:index.php');
-}
-else{
-	if(isset($_POST['update']))
-	{
-		$name=$_POST['name'];
-		$contactno=$_POST['contactno'];
-		$query=mysqli_query("update users set name='$name',contactno='$contactno' where id='".$_SESSION['id']."'");
-		if($query)
-		{
-echo "<script>alert('Your info has been updated');</script>";
-		}
+	header('location:index.php');
 	}
-
-
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
-
-
-if(isset($_POST['submit']))
-{
-$sql=mysqli_query($bd,"SELECT password FROM  users where password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
-$num=mysqli_fetch_array($sql);
-if($num>0)
-{
- $con=mysqli_query($bd,"update students set password='".md5($_POST['newpass'])."', updationDate='$currentTime' where id='".$_SESSION['id']."'");
-echo "<script>alert('Password Changed Successfully !!');</script>";
-}
-else
-{
-	echo "<script>alert('Current Password not match !!');</script>";
-}
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,32 +127,24 @@ return true;
 			<div class="row">		
 <h4>Personal info</h4>
 				<div class="col-md-12 col-sm-12 already-registered-login">
-
-<?php
-$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
-while($row=mysqli_fetch_array($query))
-{
-?>
-
-<form class="register-form" role="form" method="post">
+<form class="register-form" role="form" method="post" id="personalUpdate" name="personalUpdate">
+<input type="hidden" name="idUser" id="idUser" value="<?php echo $_SESSION['id'] ?>" />
 <div class="form-group">
 	<label class="info-title" for="name">Name<span>*</span></label>
-	<input type="text" class="form-control unicase-form-control text-input" value="<?php echo $row['name'];?>" id="name" name="name" required="required">
+	<input type="text" class="form-control unicase-form-control text-input" id="name" name="name" required="required">
 </div>
 <div class="form-group">
 	<label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-	<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" value="<?php echo $row['email'];?>" readonly>
+	<input type="email" class="form-control unicase-form-control text-input" id="email" readonly>
  </div>
 <div class="form-group">
 	<label class="info-title" for="Contact No.">Contact No. <span>*</span></label>
-	<input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" value="<?php echo $row['contactno'];?>"  maxlength="10">
+	<input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" maxlength="10">
 </div>
 	 <button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
 </form>
-<?php } ?>
 				</div>	
 				<!-- already-registered-login -->		
-
 			</div>			
 		</div>
 		<!-- panel-body  -->
@@ -203,7 +153,7 @@ while($row=mysqli_fetch_array($query))
 </div>
 <!-- checkout-step-01  -->
 					    <!-- checkout-step-02  -->
-					  	<div class="panel panel-default checkout-step-02">
+			<div class="panel panel-default checkout-step-02">
 						    <div class="panel-heading">
 						      <h4 class="unicase-checkout-title">
 						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseTwo">
@@ -211,31 +161,20 @@ while($row=mysqli_fetch_array($query))
 						        </a>
 						      </h4>
 						    </div>
-						    <div id="collapseTwo" class="panel-collapse collapse">
-						      <div class="panel-body">
+						<div id="collapseTwo" class="panel-collapse collapse">
+					<div class="panel-body">
 						     
-					<form class="register-form" role="form" method="post" name="chngpwd" onSubmit="return valid();">
-<div class="form-group">
-					    <label class="info-title" for="Current Password">Current Password<span>*</span></label>
-					    <input type="password" class="form-control unicase-form-control text-input" id="cpass" name="cpass" required="required">
-					  </div>
-
-
-
+					<form class="register-form" role="form" method="post" name="chngpwd" id="chngpwd" onSubmit="return valid();">
 						<div class="form-group">
-					    <label class="info-title" for="New Password">New Password <span>*</span></label>
-			 <input type="password" class="form-control unicase-form-control text-input" id="newpass" name="newpass">
-					  </div>
-					  <div class="form-group">
-					    <label class="info-title" for="Confirm Password">Confirm Password <span>*</span></label>
-					    <input type="password" class="form-control unicase-form-control text-input" id="cnfpass" name="cnfpass" required="required" >
-					  </div>
-					  <button type="submit" name="submit" class="btn-upper btn btn-primary checkout-page-button">Change </button>
+					    	<label class="info-title" for="New Password">New Password <span>*</span></label>
+			 				<input type="password" class="form-control unicase-form-control text-input" id="newpass" name="newpass">
+					  	</div>
+					  	<div class="form-group">
+					    	<label class="info-title" for="Confirm Password">Confirm Password <span>*</span></label>
+					    	<input type="password" class="form-control unicase-form-control text-input" id="cnfpass" name="cnfpass" required="required" >
+					  	</div>
+					  	<button type="submit" name="submit" class="btn-upper btn btn-primary checkout-page-button">Change </button>
 					</form> 
-
-
-
-
 						      </div>
 						    </div>
 					  	</div>
@@ -266,24 +205,83 @@ while($row=mysqli_fetch_array($query))
     <script src="assets/js/bootstrap-select.min.js"></script>
     <script src="assets/js/wow.min.js"></script>
 	<script src="assets/js/scripts.js"></script>
-
-	<!-- For demo purposes – can be removed on production -->
-	
 	<script src="switchstylesheet/switchstylesheet.js"></script>
 	
 	<script>
-		$(document).ready(function(){ 
-			$(".changecolor").switchstylesheet( { seperator:"color"} );
-			$('.show-theme-options').click(function(){
-				$(this).parent().toggleClass('open');
-				return false;
-			});
-		});
+	$(function () {
+		getProfile();
+		
+	//===========================Get all the data from single profile user==========================
+		function getProfile(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost/Mommy-Baby-Online-Shopping/api2/getSingleProfile/" + <?php echo $_SESSION['id'] ?>,
+                  dataType: "json",
 
-		$(window).bind("load", function() {
-		   $('.show-theme-options').delay(2000).trigger('click');
-		});
+                  success: function (data, status) {
+                     $("#id").val(data.id);
+                     $("#name").val(data.name);
+                     $("#email").val(data.email);
+                     $("#contactno").val(data.contactno);   
+                                  
+                  },
+                  error: function () {
+                     console.log("error");
+                  }
+               });
+        }
+		
+	//=================================Update personal data=========================================
+		$('#personalUpdate').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData);  
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/Mommy-Baby-Online-Shopping/api2/UpdateProfile/" + <?php echo $_SESSION['id'] ?>,
+                dataType: "json",
+                data:formData,
+                success: function (data, status) {
+                    if (data.status=="passed"){
+                        alert("Edit succeed");
+						getProfile();
+                    }
+                    else {
+                        alert("Edit failed - no record found with the given ID");
+                    }
+                },
+                error: function () {
+                    alert("error" + status);
+                }
+            });
+        });
+
+	//=======================================Update Password============================================
+		$('#chngpwd').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData);  
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/Mommy-Baby-Online-Shopping/api2/UpdatePassword/" + <?php echo $_SESSION['id'] ?>,
+                dataType: "json",
+                data:formData,
+                success: function (data, status) {
+                    if (data.status=="passed"){
+                        alert("Password Successfull Update");
+                    }
+                    else {
+                        alert("Edit failed - no record found with the given ID");
+                    }
+                },
+                error: function () {
+                    alert("error" + status);
+                }
+            });
+        });
+	});
 	</script>
 </body>
 </html>
-<?php } ?>

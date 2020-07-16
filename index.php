@@ -111,6 +111,218 @@ $app->post('/api2/register', function (Request $request, Response $response, arr
         echo json_encode($data);
     }
 });
+//===================================UpdateProfile============================================
+$app->get('/api2/getSingleProfile/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    
+    $sql="SELECT * FROM users WHERE id =$id";
+
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        
+        $user =$stmt->fetch(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($user);
+        
+    }catch(PDOException $e){
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+$app->put('/api2/UpdateProfile/{id}', function (Request $request, Response $response, array $args) {
+    
+    $name = $request->getParam('name');
+    $id = $request->getAttribute("id");
+    $contactno = $request->getParam('contactno');
+    
+    $sql = "UPDATE users SET name= :name,contactno= :contactno WHERE id=$id";
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':contactno', $contactno);
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================UpdatePassword===========================================
+$app->put('/api2/UpdatePassword/{id}', function (Request $request, Response $response, array $args) {
+    
+    $id = $args['id'];
+    $password = md5($request->getParam('cnfpass'));
+    
+    $sql = "UPDATE users SET password= :password WHERE id=$id";
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':password', $password);
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================BillingAddresss==========================================
+$app->get('/api2/getBillingAddress/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    
+    $sql="SELECT * FROM users WHERE id =$id";
+
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        
+        $user =$stmt->fetch(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($user);
+        
+    }catch(PDOException $e){
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+$app->put('/api2/UpdateBillingAddress/{id}', function (Request $request, Response $response, array $args) {
+    
+    $billingaddress = $request->getParam('billingaddress');
+    $id = $request->getAttribute("id");
+    $billingstate = $request->getParam('billingstate');
+    $billingcity = $request->getParam('billingcity');
+    $billingpincode = $request->getParam('billingpincode');
+    
+    $sql = "UPDATE users SET billingAddress= :billingaddress,billingState=:billingstate,billingCity=:billingcity,billingPincode=:billingpincode WHERE id=$id";
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':billingaddress', $billingaddress);
+        $stmt->bindValue(':billingstate', $billingstate);
+        $stmt->bindValue(':billingcity', $billingcity);
+        $stmt->bindValue(':billingpincode', $billingpincode);
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================ShippingAddress==========================================
+$app->get('/api2/getShippingAddress/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    
+    $sql="SELECT * FROM users WHERE id =$id";
+
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        
+        $user =$stmt->fetch(PDO::FETCH_OBJ);
+
+        $db = null;
+        echo json_encode($user);
+        
+    }catch(PDOException $e){
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+$app->put('/api2/UpdateShippingAddress/{id}', function (Request $request, Response $response, array $args) {
+    
+    $shippingaddress = $request->getParam('shippingaddress');
+    $id = $request->getAttribute("id");
+    $shippingstate = $request->getParam('shippingstate');
+    $shippingcity = $request->getParam('shippingcity');
+    $shippingpincode = $request->getParam('shippingpincode');
+    
+    $sql = "UPDATE users SET shippingAddress=:shippingaddress,shippingState=:shippingstate,shippingCity=:shippingcity,shippingPincode=:shippingpincode WHERE id=$id";
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':shippingaddress', $shippingaddress);
+        $stmt->bindValue(':shippingstate', $shippingstate);
+        $stmt->bindValue(':shippingcity', $shippingcity);
+        $stmt->bindValue(':shippingpincode', $shippingpincode);
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
 
 $app->run();
 ?>

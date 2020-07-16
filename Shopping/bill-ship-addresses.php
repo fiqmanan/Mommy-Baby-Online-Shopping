@@ -1,21 +1,12 @@
 <?php
-$mysql_hostname = "localhost";
-$mysql_user = "root";
-$mysql_password = "";
-$mysql_database = "shopping";
-$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
-mysqli_select_db($bd,$mysql_database) or die("Could not select database");
-
-?>
-<?php
 session_start();
 //error_reporting(0);
 include('includes/config.php');
-if(strlen($_SESSION['login'])==0)
-    {   
-header('location:index.php');
-}
-else{
+
+	if(strlen($_SESSION['login'])==0){   
+		header('location:index.php');
+	}
+	else{
 	// code for billing address updation
 	if(isset($_POST['update']))
 	{
@@ -26,7 +17,7 @@ else{
 		$query=mysqli_query($bd,"update users set billingAddress='$baddress',billingState='$bstate',billingCity='$bcity',billingPincode='$bpincode' where id='".$_SESSION['id']."'");
 		if($query)
 		{
-echo "<script>alert('Billing Address has been updated');</script>";
+		echo "<script>alert('Billing Address has been updated');</script>";
 		}
 	}
 
@@ -44,9 +35,6 @@ echo "<script>alert('Billing Address has been updated');</script>";
 echo "<script>alert('Shipping Address has been updated');</script>";
 		}
 	}
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -138,33 +126,25 @@ echo "<script>alert('Shipping Address has been updated');</script>";
 	    <div class="panel-body">
 			<div class="row">		
 				<div class="col-md-12 col-sm-12 already-registered-login">
-
-	<?php
-	$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
-	//$query = mysqli_query("select * from users where id=1");
-	while($row=mysqli_fetch_array($query))
-	{
-	?>
-<form class="register-form" role="form" method="post">
-	<div class="form-group">
-		<label class="info-title" for="Billing Address">Billing Address<span>*</span></label>
-		<textarea class="form-control unicase-form-control text-input" " name="billingaddress" required="required"><?php echo $row['billingAddress'];?></textarea>
-	</div>
-	<div class="form-group">
-		<label class="info-title" for="Billing State ">Billing State  <span>*</span></label>
-		<input type="text" class="form-control unicase-form-control text-input" id="bilingstate" name="bilingstate" value="<?php echo $row['billingState'];?>" required>
-	</div>
-	<div class="form-group">
-		<label class="info-title" for="Billing City">Billing City <span>*</span></label>
-		<input type="text" class="form-control unicase-form-control text-input" id="billingcity" name="billingcity" required="required" value="<?php echo $row['billingCity'];?>" >
-	</div>
- 	<div class="form-group">
-		<label class="info-title" for="Billing Pincode">Billing Pincode <span>*</span></label>
-		<input type="text" class="form-control unicase-form-control text-input" id="billingpincode" name="billingpincode" required="required" value="<?php echo $row['billingPincode'];?>" >
-	</div>
-	<button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
-</form>
-	<?php } ?>
+		<form class="register-form" role="form" id="billingform" method="post">
+			<div class="form-group">
+				<label class="info-title" for="Billing Address">Billing Address<span>*</span></label>
+				<textarea class="form-control unicase-form-control text-input" name="billingaddress" id="billingaddress" required="required"></textarea>
+			</div>
+			<div class="form-group">
+				<label class="info-title" for="Billing State ">Billing State  <span>*</span></label>
+				<input type="text" class="form-control unicase-form-control text-input" id="billingstate" name="billingstate" required="required">
+			</div>
+			<div class="form-group">
+				<label class="info-title" for="Billing City">Billing City <span>*</span></label>
+				<input type="text" class="form-control unicase-form-control text-input" id="billingcity" name="billingcity" required="required" >
+			</div>
+			<div class="form-group">
+				<label class="info-title" for="Billing Pincode">Billing Pincode <span>*</span></label>
+				<input type="text" class="form-control unicase-form-control text-input" id="billingpincode" name="billingpincode" required="required" >
+			</div>
+			<button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
+		</form>
 	</div>	
 	<!-- already-registered-login -->		
 
@@ -186,37 +166,25 @@ echo "<script>alert('Shipping Address has been updated');</script>";
 	</div>
 	<div id="collapseTwo" class="panel-collapse collapse">
 		<div class="panel-body">			     
-				<?php
-				$query=mysqli_query($bd,"select * from users where id='".$_SESSION['id']."'");
-					while($row=mysqli_fetch_array($query))
-					{
-				?>
-
-					<form class="register-form" role="form" method="post">
+					<form class="register-form" role="form" method="post" id="shippingform">
 					<div class="form-group">
 					    <label class="info-title" for="Shipping Address">Shipping Address<span>*</span></label>
-					    <textarea class="form-control unicase-form-control text-input" " name="shippingaddress" required="required"><?php echo $row['shippingAddress'];?></textarea>
-					  </div>
-
-
-
-						<div class="form-group">
+					    <textarea class="form-control unicase-form-control text-input" name="shippingaddress" id="shippingaddress" required="required"></textarea>
+					</div>
+					<div class="form-group">
 					    <label class="info-title" for="Billing State ">Shipping State  <span>*</span></label>
-			 <input type="text" class="form-control unicase-form-control text-input" id="shippingstate" name="shippingstate" value="<?php echo $row['shippingState'];?>" required>
-					  </div>
-					  <div class="form-group">
+			 			<input type="text" class="form-control unicase-form-control text-input" id="shippingstate" name="shippingstate" required>
+					</div>
+					<div class="form-group">
 					    <label class="info-title" for="Billing City">Shipping City <span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" id="shippingcity" name="shippingcity" required="required" value="<?php echo $row['shippingCity'];?>" >
-					  </div>
- 			<div class="form-group">
+					    <input type="text" class="form-control unicase-form-control text-input" id="shippingcity" name="shippingcity" required="required" >
+					</div>
+ 					<div class="form-group">
 					    <label class="info-title" for="Billing Pincode">Shipping Pincode <span>*</span></label>
-					    <input type="text" class="form-control unicase-form-control text-input" id="shippingpincode" name="shippingpincode" required="required" value="<?php echo $row['shippingPincode'];?>" >
-					  </div>
-
-
+					    <input type="text" class="form-control unicase-form-control text-input" id="shippingpincode" name="shippingpincode" required="required">
+					</div>
 					  <button type="submit" name="shipupdate" class="btn-upper btn btn-primary checkout-page-button">Update</button>
 					</form>
-					<?php } ?>
 						      </div>
 						    </div>
 					  	</div>
@@ -248,22 +216,106 @@ echo "<script>alert('Shipping Address has been updated');</script>";
     <script src="assets/js/wow.min.js"></script>
 	<script src="assets/js/scripts.js"></script>
 
-	<!-- For demo purposes – can be removed on production -->
-	
-	<script src="switchstylesheet/switchstylesheet.js"></script>
-	
-	<script>
-		$(document).ready(function(){ 
-			$(".changecolor").switchstylesheet( { seperator:"color"} );
-			$('.show-theme-options').click(function(){
-				$(this).parent().toggleClass('open');
-				return false;
-			});
-		});
 
-		$(window).bind("load", function() {
-		   $('.show-theme-options').delay(2000).trigger('click');
-		});
+	<script>
+		$(function () {
+		getBillingAddress();
+		getShippingAddress();
+		
+//===========================Get all the data from single billing  address==========================
+		function getBillingAddress(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost/Mommy-Baby-Online-Shopping/api2/getBillingAddress/" + <?php echo $_SESSION['id'] ?>,
+                  dataType: "json",
+
+                  success: function (data, status) {
+                     $("#billingstate").val(data.billingState);
+                     $("#billingaddress").val(data.billingAddress);
+                     $("#billingcity").val(data.billingCity);
+                     $("#billingpincode").val(data.billingPincode);   
+                                  
+                  },
+                  error: function () {
+					  alert("error");
+                     console.log("error");
+                  }
+               });
+        }
+
+//===========================Get all the data from single shipping address=============================
+		function getShippingAddress(){
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost/Mommy-Baby-Online-Shopping/api2/getShippingAddress/" + <?php echo $_SESSION['id'] ?>,
+                  dataType: "json",
+
+                  success: function (data, status) {
+                     $("#shippingstate").val(data.shippingState);
+                     $("#shippingaddress").val(data.shippingAddress);
+                     $("#shippingcity").val(data.shippingCity);
+                     $("#shippingpincode").val(data.shippingPincode);   
+                                  
+                  },
+                  error: function () {
+					  alert("error");
+                     console.log("error");
+                  }
+               });
+        }
+
+	});
+//===========================Update User billing address =============================
+$('#billingform').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData);  
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/Mommy-Baby-Online-Shopping/api2/UpdateBillingAddress/" + <?php echo $_SESSION['id'] ?>,
+                dataType: "json",
+                data:formData,
+                success: function (data, status) {
+                    if (data.status=="passed"){
+                        alert("Edit succeed");
+						getBillingAddress();
+                    }
+                    else {
+                        alert("Edit failed - no record found with the given ID");
+                    }
+                },
+                error: function () {
+                    alert("error" + status);
+                }
+            });
+        });
+
+//===========================Update User Shipping address==============================
+$('#shippingform').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData);  
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/Mommy-Baby-Online-Shopping/api2/UpdateShippingAddress/" + <?php echo $_SESSION['id'] ?>,
+                dataType: "json",
+                data:formData,
+                success: function (data, status) {
+                    if (data.status=="passed"){
+                        alert("Edit succeed");
+						getShippingAddress();
+                    }
+                    else {
+                        alert("Edit failed - no record found with the given ID");
+                    }
+                },
+                error: function () {
+                    alert("error" + status);
+                }
+            });
+        });
 	</script>
 </body>
 </html>

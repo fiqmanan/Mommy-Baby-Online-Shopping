@@ -1,5 +1,7 @@
 <?php 
-session_start();
+//$_SESSION['login']="anuj.lpu1@gmail.com";
+//$_SESSION['id']= "1";
+//$_SESSION['username']= "Anuj Kumar";
 ?>
 
 <div class="top-bar animate-dropdown">
