@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2020 at 11:31 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Jul 18, 2020 at 02:41 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -46,6 +45,29 @@ INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cartId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `productName` varchar(500) NOT NULL,
+  `price` varchar(20) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cartId`, `userId`, `productName`, `price`, `quantity`) VALUES
+(5, 7, 'Skirt', '15', 1),
+(7, 6, 'Top', '20', 1),
+(8, 6, 'Scarf', '15', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `category`
 --
 
@@ -66,6 +88,27 @@ INSERT INTO `category` (`id`, `categoryName`, `categoryDescription`, `creationDa
 (4, 'Electronics', 'Electronic Products', '2017-01-24 19:19:32', ''),
 (5, 'Furniture', 'test', '2017-01-24 19:19:54', ''),
 (6, 'Fashion', 'Fashion', '2017-02-20 19:18:52', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list`
+--
+
+CREATE TABLE `list` (
+  `productId` int(11) NOT NULL,
+  `productName` varchar(500) NOT NULL,
+  `price` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `list`
+--
+
+INSERT INTO `list` (`productId`, `productName`, `price`) VALUES
+(1, 'Tshirt boy', '20'),
+(2, 'Short', '15'),
+(3, 'blouse', '50');
 
 -- --------------------------------------------------------
 
@@ -287,7 +330,9 @@ INSERT INTO `userlog` (`id`, `userEmail`, `userip`, `loginTime`, `logout`, `stat
 (31, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-13 18:10:46', '13-06-2020 11:47:15 PM', 1),
 (32, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-13 18:22:40', '', 1),
 (33, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:28:01', '14-06-2020 02:58:04 PM', 1),
-(34, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:29:34', '', 1);
+(34, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:29:34', '', 1),
+(35, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2020-07-15 23:34:41', '16-07-2020 05:10:04 AM', 1),
+(36, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2020-07-15 23:40:22', '16-07-2020 07:59:40 AM', 1);
 
 -- --------------------------------------------------------
 
@@ -322,7 +367,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `contactno`, `password`, `shippingAd
 (2, 'Amit ', 'amit@gmail.com', 8285703355, '5c428d8875d2948607f3e3fe134d71b4', '', '', '', 0, '', '', '', 0, '2017-03-15 17:21:22', ''),
 (3, 'MUHAMMAD SYAFIQ ABDUL MANAN', 'muhammadsyafiqmanan@gmail.com', 22324321, '827ccb0eea8a706c4c34a16891f84e7b', '', '', '', 0, '', '', '', 0, '2020-04-26 08:34:46', ''),
 (4, 'MUHAMMAD SYAFIQ ABDUL MANAN', 'muhammadsyafiqmanan@gmail.com', 1125088318, '827ccb0eea8a706c4c34a16891f84e7b', '', '', '', 0, '', '', '', 0, '2020-06-13 13:16:45', ''),
-(5, 'Najihah', 'najihah@gmail.com', 123, '202cb962ac59075b964b07152d234b70', '', '', '', 0, '', '', '', 0, '2020-06-13 14:24:35', '');
+(5, 'Najihah', 'najihah@gmail.com', 123, '202cb962ac59075b964b07152d234b70', '', '', '', 0, '', '', '', 0, '2020-06-13 14:24:35', ''),
+(6, 'Izzaty', 'izzaty@gmail.com', 123456789, '202cb962ac59075b964b07152d234b70', '', '', '', 0, '', '', '', 0, '2020-07-16 02:29:57', ''),
+(7, 'Ain', 'ain@gmail.com', 14567892, '202cb962ac59075b964b07152d234b70', '', '', '', 0, '', '', '', 0, '2020-07-16 02:31:18', '');
 
 -- --------------------------------------------------------
 
@@ -355,10 +402,22 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cartId`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `list`
+--
+ALTER TABLE `list`
+  ADD PRIMARY KEY (`productId`);
 
 --
 -- Indexes for table `orders`
@@ -419,10 +478,22 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `list`
+--
+ALTER TABLE `list`
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -458,13 +529,13 @@ ALTER TABLE `subcategory`
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

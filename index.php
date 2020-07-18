@@ -321,5 +321,90 @@ $app->put('/api2/UpdateShippingAddress/{id}', function (Request $request, Respon
     }
 });
 
+//===================================GetListCart==========================================
+$app->get('/api2/getlatestcart/{userId}', function (Request $request, Response $response, array $args) 
+{
+    $userId = $args['userId'];    
+    $sql="SELECT * FROM cart WHERE userId =$userId";
+    try {
+        // Get DB Object
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($user);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================DeleteAnItem==========================================
+$app->delete('/api2/deleteItem/{cartId}', function (Request $request, Response $response, array $args) {
+    $cartId = $args['cartId'];
+    $sql = "DELETE FROM cart WHERE cartId = $cartId";
+    
+    try {
+        // Get DB Object
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+    
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    
+        $db = null;
+        $data = array(
+            "rowAffected" => $count,
+            "status" => "success"
+        );
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================UpdateQuantity==========================================
+$app->put('/api2/updateCart/{cartId}', function (Request $request, Response $response, array $args) {
+    
+    $quantity = $request->getParam('quantity');
+    $cartId = $args['cartId'];
+    $sql = "UPDATE cart SET quantity= :quantity WHERE cartId=$cartId";
+    
+    // $cartId = $args['cartId'];
+    // $sql="SELECT * FROM cart WHERE cartId = $cartId";
+
+    try{
+        //Get DB Object
+        $db = new db();
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':quantity', $quantity);
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
+
+
 $app->run();
 ?>
