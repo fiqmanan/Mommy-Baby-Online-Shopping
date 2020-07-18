@@ -15,7 +15,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
-					<!-- ============================================================= LOGO ============================================================= -->
+<!-- ============================================================= LOGO ============================================================= -->
 <div class="logo">
 	<a href="index.php">
 
@@ -80,8 +80,6 @@ if(!empty($_SESSION['cart'])){
 				$_SESSION['qnty']=$totalqunty+=$quantity;
 
 	?>
-
-
 			<li>
 				<div class="cart-item product-summary">
 					<div class="row">
@@ -126,7 +124,7 @@ if(!empty($_SESSION['cart'])){
 				<div class="total-price-basket">
 					<span class="lbl">cart -</span>
 					<span class="total-price">
-						<span class="sign">Rs.</span>
+						<span class="sign">RM.</span>
 						<span class="value">00.00</span>
 					</span>
 				</div>
