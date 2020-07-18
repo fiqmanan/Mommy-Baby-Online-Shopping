@@ -22,12 +22,9 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 //===================================Login===================================================
 $app->post('/api2/login', function (Request $request, Response $response, array $args) {
-    
+
     $email= $_POST["email"];
     $password= md5($_POST["password"]);
-
-    //$query = mysqli_query($bd,"SELECT * FROM users WHERE email='$email' and password='$password'");
-    //$num=mysqli_fetch_array($query);
     
     $sql= "SELECT * FROM users WHERE email='$email' AND password='$password'";
     try{
