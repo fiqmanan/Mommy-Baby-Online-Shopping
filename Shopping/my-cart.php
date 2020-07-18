@@ -88,6 +88,9 @@
 								</table>
 								
 								<h4 style="text-align:right;">$Total = RM  <text id="totalAmount"></text> </h4>
+								<div style="text-align:center">
+								<a href="checkout.php?id=<?php echo $_SESSION['id'] ?>" ><button >Proceed To Payment</button></a>
+								</div>
 							</div>
 						</div>
 						<!-- ==================================Cart _End_================================-->

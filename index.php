@@ -20,6 +20,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     }
 });
 
+
 //===================================Login===================================================
 $app->post('/api2/login', function (Request $request, Response $response, array $args) {
 
@@ -325,7 +326,7 @@ $app->put('/api2/UpdateShippingAddress/{id}', function (Request $request, Respon
 $app->get('/api2/getlatestcart/{userId}', function (Request $request, Response $response, array $args) 
 {
     $userId = $args['userId'];    
-    $sql="SELECT * FROM cart WHERE userId =$userId";
+    $sql="SELECT * FROM cart WHERE userId =$userId AND paymentStatus=''";
     try {
         // Get DB Object
         $db = new db();
@@ -405,6 +406,124 @@ $app->put('/api2/updateCart/{cartId}', function (Request $request, Response $res
     }
 });
 
+//===================================PROCEED PAYMENT==========================================
+$app->put('/api2/payment/{id}', function (Request $request, Response $response, array $args) {
+
+    
+    //upload photo
+
+    // if(isset($_POST["submit"])){     
+    //     $errors = array();
+        
+    //     $extension = array("jpeg","jpg","png","gif");
+        
+    //     $bytes = 1024;
+    //     $allowedKB = 100;
+    //     $totalBytes = $allowedKB * $bytes;
+        
+    //     if(isset($_FILES["files"])==false)
+    //     {
+    //         echo "<b>Please, Select the files to upload!!!</b>";
+    //         return;
+    //     }
+        
+        
+    //     foreach($_FILES["files"]["tmp_name"] as $key=>$tmp_name)
+    //     {
+    //         $uploadThisFile = true;
+            
+    //         $file_name=$_FILES["files"]["name"][$key];
+    //         $file_tmp=$_FILES["files"]["tmp_name"][$key];
+            
+    //         $ext=pathinfo($file_name,PATHINFO_EXTENSION);
+
+    //         if(!in_array(strtolower($ext),$extension))
+    //         {
+    //             array_push($errors, "File type is invalid. Name:- ".$file_name);
+    //             $uploadThisFile = false;
+    //         }               
+            
+    //         if($_FILES["files"]["size"][$key] > $totalBytes){
+    //             array_push($errors, "File size must be less than 100KB. Name:- ".$file_name);
+    //             $uploadThisFile = false;
+    //         }
+            
+    //         if(file_exists("Upload/".$_FILES["files"]["name"][$key]))
+    //         {
+    //             array_push($errors, "File is already exist. Name:- ". $file_name);
+    //             $uploadThisFile = false;
+    //         }
+            
+    //         if($uploadThisFile){
+                          
+    //         }
+    //     }
+              
+    // }
+
+    //END of UPLOAD PHOTO
+
+    
+
+    $userID		= $request->getAttribute('id');
+    $fullName   = $request->getParam('fullName');
+    $nric       = $request->getParam('nric');
+    $email      = $request->getParam('email');
+    $contactNo  = $request->getParam('contactNo');
+    $total 		= $request->getParam('total');
+    $bank       = $request->getParam('bank');
+    $status     = "Pending";
+    $FilePath   = "Upload";
+    // $filename=basename($file_name,$ext);
+    // $newFileName=$filename.$ext;                
+    // move_uploaded_file($_FILES["files"]["tmp_name"][$key],"Upload/".$newFileName);
+
+    $sql4 = "UPDATE cart SET 
+    fullName        = :fullName,
+    nric            = :nric,
+    email           = :email,
+    contactNo       = :contactNo,
+    bank            = :bank,
+    total       	= :total,
+    FilePath        = :FilePath,
+    FileName        = :newFileName,
+    paymentStatus   = :status
+    WHERE userId   = $userID";
+
+
+
+    try{
+        //Get DB Object
+        $db = new db();
+
+        $db = $db->connect();
+
+        $stmt = $db->prepare($sql4);
+        $stmt->bindValue(':fullName', $fullName);
+        $stmt->bindValue(':nric', $nric);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':contactNo', $contactNo);
+        $stmt->bindValue(':bank', $bank);
+        $stmt->bindValue(':total', $total);
+        $stmt->bindValue(':FilePath', $FilePath);
+        $stmt->bindValue(':newFileName', $newFileName);
+        $stmt->bindValue(':status', $status);
+
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        $data = array(
+        "status" => "passed"
+        );
+        echo json_encode($data);
+
+    }catch(PDOException $e){
+        $data = array(
+            "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
 
 $app->run();
 ?>

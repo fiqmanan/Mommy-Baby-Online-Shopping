@@ -127,22 +127,22 @@ return true;
 			<div class="row">		
 <h4>Personal info</h4>
 				<div class="col-md-12 col-sm-12 already-registered-login">
-<form class="register-form" role="form" method="post" id="personalUpdate" name="personalUpdate">
-<input type="hidden" name="idUser" id="idUser" value="<?php echo $_SESSION['id'] ?>" />
-<div class="form-group">
-	<label class="info-title" for="name">Name<span>*</span></label>
-	<input type="text" class="form-control unicase-form-control text-input" id="name" name="name" required="required">
-</div>
-<div class="form-group">
-	<label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-	<input type="email" class="form-control unicase-form-control text-input" id="email" readonly>
- </div>
-<div class="form-group">
-	<label class="info-title" for="Contact No.">Contact No. <span>*</span></label>
-	<input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" maxlength="10">
-</div>
-	 <button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
-</form>
+					<form class="register-form" role="form" method="post" id="personalUpdate" name="personalUpdate">
+						<input type="hidden" name="idUser" id="idUser" value="<?php echo $_SESSION['id'] ?>" />
+						<div class="form-group">
+							<label class="info-title" for="name">Name<span>*</span></label>
+							<input type="text" class="form-control unicase-form-control text-input" id="name" name="name" required="required">
+						</div>
+						<div class="form-group">
+							<label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
+							<input type="email" class="form-control unicase-form-control text-input" id="email" readonly>
+						</div>
+						<div class="form-group">
+							<label class="info-title" for="Contact No.">Contact No. <span>*</span></label>
+							<input type="text" class="form-control unicase-form-control text-input" id="contactno" name="contactno" required="required" maxlength="10">
+						</div>
+						<button type="submit" name="update" class="btn-upper btn btn-primary checkout-page-button">Update</button>
+					</form>
 				</div>	
 				<!-- already-registered-login -->		
 			</div>			

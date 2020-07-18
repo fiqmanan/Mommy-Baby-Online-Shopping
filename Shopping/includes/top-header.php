@@ -15,7 +15,7 @@
 					}?>
 						<li><a href="my-account.php"><i class="icon fa fa-user"></i>My Account</a></li>
 						<li><a href="my-cart.php"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-						<li><a href="checkout.php"><i class="icon fa fa-key"></i>Checkout</a></li>
+						<!-- <li><a href="checkout.php"><i class="icon fa fa-key"></i>Checkout</a></li> -->
 	
 					<?php if(isset($_SESSION['login'])==0)
     				{ ?>

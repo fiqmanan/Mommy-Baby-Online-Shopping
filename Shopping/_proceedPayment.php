@@ -81,7 +81,7 @@ $newFileName=$filename.$ext;
 move_uploaded_file($_FILES["files"]["tmp_name"][$key],"Upload/".$newFileName);
 // $attachment = $_POST['attachment'];
 
-$sql4 = "UPDATE orders SET 
+$sql4 = "UPDATE cart SET 
 fullName        = '$fullName',
 nric            = '$nric',
 email           = '$email',
@@ -95,9 +95,9 @@ WHERE userId   = '$userID'";
 
 $sql_query4 = mysqli_query($bd,$sql4);
 
-$message = "Payment Successfully!";
 
-echo "<script type='text/javascript'>alert('$message');
+
+echo "<script type='text/javascript'>
     window.location.href='index.php'</script>";
 
 ?>

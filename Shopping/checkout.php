@@ -1,7 +1,11 @@
-<?php 
-session_start();
 
-$userID = $_SESSION['id'];
+
+<?php 
+	session_start();
+
+	include('includes/config.php');
+
+	$userID = $_SESSION['id'];
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +138,7 @@ $userID = $_SESSION['id'];
 			<div class="shopping-cart">
 				<div class="col-md-12 col-sm-12 shopping-cart-table ">
 	
+		<!-- <form class="register-form" role="form" method="post" id="proceedPayment" name="proceedPayment" onsubmit="return confirm('Do you really want to proceed the payment?');" enctype="multipart/form-data"> -->
 		<form action="_proceedPayment.php" method="POST" onsubmit="return confirm('Do you really want to proceed the payment?');" enctype="multipart/form-data">
 				<!--PAYMENT --->
 			<div class="main">
@@ -206,7 +211,7 @@ $userID = $_SESSION['id'];
 
 						<tr>
 							<td style="text-align:right">Total Payment (RM) :</td>
-							<td><input type="text" name="total" value=""></td>
+							<td><input type="text" name="total" id="totalAmount" readonly></td>
 						</tr>
 					</table>
 				</div>
@@ -277,5 +282,75 @@ $userID = $_SESSION['id'];
 		}
 	}
 </script>
+
+
+
+<script type="text/javascript">
+	$(function () {
+		getLatestCart();
+
+		//=======================RESTFUL API GET - LIST CART===============================
+		function getLatestCart(){			
+            $.ajax({
+                  type: "GET",
+                  url: "http://localhost/Mommy-Baby-Online-Shopping/api2/getlatestcart/" + <?php echo $_SESSION['id'] ?> ,
+                  dataType: "json",
+                  success: function (data, status) {
+					  
+						  if (data.length == 0)
+						  {
+							alert("Cart is Empty. Please Select Item!");
+							window.location.href='my-cart.php';
+						  }
+						  else{
+							var tot = 0;
+							for (let x = 0; x < data.length; x++) 
+							{
+								var mul = data[x].price * data[x].quantity;
+								tot += mul;
+							}
+							document.querySelector('#totalAmount').value = tot;							
+						  }
+					                    
+                  },
+                  error: function () {
+                     console.log("error");
+                  }
+               });
+        }
+	
+
+	
+	});
+
+	//================================Proceed Payment=========================================
+	$('#proceedPayment').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+			console.log(formData);  
+			
+
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/Mommy-Baby-Online-Shopping/api2/payment/" + <?php echo $_SESSION['id'] ?>,
+                dataType: "json",
+                data:formData,
+                success: function (data, status) {
+                    if (data.status=="passed"){
+                        alert("Payment Successful");
+						getProfile();
+                    }
+                    else {
+                        alert("Payment failed - no record found with the given ID");
+                    }
+                },
+                error: function () {
+                    alert("error2" + status);
+                }
+            });
+        });
+	
+	</script>
 
 </html>
