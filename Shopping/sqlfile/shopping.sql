@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2020 at 02:41 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.6
+-- Generation Time: Jul 18, 2020 at 06:42 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -53,17 +54,26 @@ CREATE TABLE `cart` (
   `userId` int(11) NOT NULL,
   `productName` varchar(500) NOT NULL,
   `price` varchar(20) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `fullName` varchar(50) DEFAULT NULL,
+  `nric` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `contactNo` varchar(50) DEFAULT NULL,
+  `bank` varchar(50) DEFAULT NULL,
+  `total` varchar(50) DEFAULT NULL,
+  `FileName` varchar(50) DEFAULT NULL,
+  `FilePath` varchar(50) DEFAULT NULL,
+  `paymentStatus` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`cartId`, `userId`, `productName`, `price`, `quantity`) VALUES
-(5, 7, 'Skirt', '15', 1),
-(7, 6, 'Top', '20', 1),
-(8, 6, 'Scarf', '15', 3);
+INSERT INTO `cart` (`cartId`, `userId`, `productName`, `price`, `quantity`, `fullName`, `nric`, `email`, `contactNo`, `bank`, `total`, `FileName`, `FilePath`, `paymentStatus`) VALUES
+(5, 7, 'Skirt', '15', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 6, 'Top', '20', 1, 'aa', 'aa', 'aa', 'aa', 'Select Your Bank', '', '4f4f6864b39a2c46ae75629f624f8828.jpg', 'Upload', 'Pending'),
+(8, 6, 'Scarf', '15', 3, 'aa', 'aa', 'aa', 'aa', 'Select Your Bank', '', '4f4f6864b39a2c46ae75629f624f8828.jpg', 'Upload', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -330,7 +340,7 @@ INSERT INTO `userlog` (`id`, `userEmail`, `userip`, `loginTime`, `logout`, `stat
 (31, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-13 18:10:46', '13-06-2020 11:47:15 PM', 1),
 (32, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-13 18:22:40', '', 1),
 (33, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:28:01', '14-06-2020 02:58:04 PM', 1),
-(34, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:29:34', '', 1),
+(34, 'najihah@gmail.com', 0x3a3a3100000000000000000000000000, '2020-06-14 09:29:34', '18-07-2020 10:27:17 AM', 1),
 (35, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2020-07-15 23:34:41', '16-07-2020 05:10:04 AM', 1),
 (36, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2020-07-15 23:40:22', '16-07-2020 07:59:40 AM', 1);
 
