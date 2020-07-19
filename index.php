@@ -28,6 +28,7 @@ $app->post('/api2/login', function (Request $request, Response $response, array 
     $password= md5($_POST["password"]);
     
     $sql= "SELECT * FROM users WHERE email='$email' AND password='$password'";
+
     try{
         //Get DB Object
         $db = new db();
@@ -527,7 +528,7 @@ $app->put('/api2/payment/{id}', function (Request $request, Response $response, 
 
 /////////////////////////////////////////////////////////////////////////////////////////// API for ADMIN 
 $app->get('/Mbos/', function (Request $request, Response $response, array $args) {
-    $response -> getBody()->write("Mummy and Baby Online Shopping");
+    $response -> getBody()->write("Mommy&Baby Online Shopping");
     return $response;
 });
 
