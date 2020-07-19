@@ -525,5 +525,282 @@ $app->put('/api2/payment/{id}', function (Request $request, Response $response, 
     }
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////// API for ADMIN 
+$app->get('/Mbos/', function (Request $request, Response $response, array $args) {
+    $response -> getBody()->write("Mummy and Baby Online Shopping");
+    return $response;
+});
+
+///////////////////////////////////////////////////////////LOGIN START//////////////////////////////////////////////////////////////////////
+$app->post('/Mbos/login', function (Request $request, Response $response, array $args) {
+    
+    $username= $_POST["username"];
+    $password= md5($_POST["password"]);
+
+    $sql= "SELECT * FROM admin WHERE username='$username' AND password='$password'";
+    try{
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+
+        if($count>0){
+            $data = array(
+            "status" => "success",
+            "admin" => $user
+        );
+        
+        $_SESSION['login']=$user['email'];
+		$_SESSION['id']= $user['id'];
+        $_SESSION['username']=$user['username'];
+
+        echo json_encode($data);
+        }
+        else{
+            $data = array(
+                "status" => "Wrong Login"
+            );
+            echo json_encode($data);
+        }
+    }catch(PDOException $e){
+        $data = array(
+            "status" => "error"
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================Register=================================================
+$app->post('/Mbos/register', function (Request $request, Response $response, array $args) {
+    
+    $email=$_POST['email'];
+    $username=$_POST['username'];
+    $password= md5($_POST["password"]);
+    
+    $sql = "INSERT INTO admin (email,username,password) VALUES (:email,:username,:password)";
+    try{
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $password);
+
+        $user = $stmt->execute();
+        $count = $stmt->rowCount();
+
+        if($count>0){
+            $data = array(
+            "status" => "success"
+        );
+        echo json_encode($data);
+        }
+        else{
+            $data = array(
+                "status" => "Sign up failed!"
+            );
+            echo json_encode($data);
+        }
+    }catch(PDOException $e){
+        $data = array(
+            "status" => "error"
+        );
+        echo json_encode($data);
+    }
+});
+///////////////////////////////////////////////////////////LOGIN END////////////////////////////////////////////////////////////////////////
+
+//get all products
+$app->get('/Mbos/products', function (Request $request, Response $response, array $args) {
+
+    $sql = "SELECT * FROM products";
+
+    try {
+        $db = new db();
+        $db = $db -> connect();
+        $stmt = $db -> query($sql);
+        $user = $stmt -> fetchAll(PDO::FETCH_OBJ);
+        $db =  null;
+        echo json_encode($user);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+//get all products by id
+$app->get('/Mbos/products/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $sql = "SELECT * FROM products WHERE id = $id";
+
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $products = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($products);
+        
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+//delete products by id
+$app->delete('/Mbos/products/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $sql = "DELETE FROM products WHERE id = $id";
+    
+    try {
+        $db = new db();
+        $db = $db->connect();
+    
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    
+        $db = null;
+        $data = array(
+            "rowAffected" => $count,
+            "status" => "success"
+        );
+
+        echo json_encode($data);
+
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+// insert new product to database
+$app->post('/Mbos/products/', function (Request $request, Response $response, array $args) {
+
+    // $target_dir = "../images/";
+    // $fileName = $target_dir.basename($_FILES["productImage"]["name"]);
+    // $targetFilePath = $target_dir . $fileName;
+    // $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+    $category = $_POST["category"];
+    $productName = $_POST["productName"];
+    $productCompany = $_POST["productCompany"];
+    $productPrice = $_POST["productPrice"];
+    $productImage = $_POST["productImage"]; 
+    $productAvailability = $_POST["productAvailability"];
+    $Date = $_POST["DateArrived"];
+    $DateArrived = date('Y-m-d', strtotime(str_replace('-', '/', $Date)));
+    $productDescription = $_POST["productDescription"];
+    $productColor = $_POST["productColor"];
+    $productQuantity = $_POST["productQuantity"];
+
+    try {
+        $sql = "INSERT INTO products (category, productName, productCompany, productPrice, productImage, productAvailability, DateArrived, productDescription, productColor, productQuantity) 
+                VALUES (:category, :productName, :productCompany, :productPrice, :productImage, :productAvailability, :DateArrived, :productDescription, :productColor, :productQuantity)";
+
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':category', $category);
+        $stmt->bindValue(':productName', $productName);
+        $stmt->bindValue(':productCompany', $productCompany);
+        $stmt->bindValue(':productPrice', $productPrice);
+        $stmt->bindValue(':productImage', $productImage);
+        $stmt->bindValue(':productAvailability', $productAvailability);
+        $stmt->bindValue(':DateArrived', $DateArrived);
+        $stmt->bindValue(':productDescription', $productDescription);
+        $stmt->bindValue(':productColor', $productColor);
+        $stmt->bindValue(':productQuantity', $productQuantity);
+    
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $db = null;
+    
+        $data = array(
+            "status" => "success",
+            "rowcount" =>$count,
+
+            "category" => $category,
+            "productName" => $productName,
+            "productCompany" => $productCompany,
+            "productPrice" => $productPrice,
+            "productImage" => $productImage,
+            "productAvailability" => $productAvailability,
+            "DateArrived" => $DateArrived,
+            "productDescription" => $productDescription,
+            "productColor" => $productColor,
+            "productQuantity" => $productQuantity,
+            
+        );
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
+
+// update product
+$app->put('/Mbos/products/{id}', function (Request $request, Response $response, array $args) {
+    
+    $id = $args['id'];
+    $productName = $request->getParam("productName");
+    $category = $request->getParam("category");
+    $productCompany = $request->getParam("productCompany");
+    $productPrice = $request->getParam("productPrice");
+    $productImage = $request->getParam("productImage");
+    $DateArrived = $request->getParam("DateArrived");
+    $productDescription = $request->getParam("productDescription");
+    $productColor = $request->getParam("productColor");
+    $productQuantity = $request->getParam("productQuantity");
+    $productAvailability = $request->getParam("productAvailability");
+    
+    $sql = "UPDATE products SET productName=:productName, category=:category, productCompany=:productCompany, 
+            productPrice=:productPrice, productImage=:productImage, DateArrived=:DateArrived,
+            productDescription=:productDescription, productColor=:productColor, productQuantity=:productQuantity,
+            productAvailability=:productAvailability WHERE id=$id";
+            
+
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam('productName', $productName);
+        $stmt->bindParam('category', $category);
+        $stmt->bindParam('productCompany', $productCompany);
+        $stmt->bindParam('productPrice', $productPrice);
+        $stmt->bindParam('productImage', $productImage);
+        $stmt->bindParam('DateArrived', $DateArrived);
+        $stmt->bindParam('productDescription', $productDescription);
+        $stmt->bindParam('productColor', $productColor);
+        $stmt->bindParam('productQuantity', $productQuantity);
+        $stmt->bindParam('productAvailability', $productAvailability);
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+    
+        $data = array(
+            "rowAffected" => $count,
+            "status" => "success"
+        );
+        echo json_encode($data);
+        
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
+        );
+        echo json_encode($data);
+    }
+});
 $app->run();
 ?>
+
