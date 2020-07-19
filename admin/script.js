@@ -12,14 +12,14 @@ $(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost/WTFinalProject/Admin2/Mbos/login",
+            url: "http://localhost/Mommy-Baby-Online-Shopping/Mbos/login",
             data: formData,
             dataType: "json",
 
             success: function (data, status, xhr) {
-                if (data.status == "passed") {
+                if (data.status == "success") {
                     alert("Login Successfully");
-                    window.location.replace("index.html");
+                    window.location.replace("main.html");
                 }
                 else {
                     alert('Failed to Login');
@@ -42,14 +42,14 @@ $(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost/WTFinalProject/Admin2/Mbos/register",
+            url: "http://localhost/Mommy-Baby-Online-Shopping/Mbos/register",
             data: formData,
             dataType: "json",
 
             success: function (data, status, xhr) {
-                if (data.status == "passed") {
+                if (data.status == "success") {
                     alert("Successfully Register the Admin");
-                    window.location.replace("login.html");
+                    window.location.replace("index.html");
                 }
                 else {
                     alert('Not Register, Something when wrong');
@@ -68,7 +68,7 @@ $(function () {
 $(function () {
     $.ajax({
         type: "GET",
-        url: "http://localhost/WTFinalProject/Admin2/Mbos/products",
+        url: "http://localhost/Mommy-Baby-Online-Shopping/Mbos/products",
         dataType: "json",
 
         success: function (data, status, xhr) {
@@ -129,7 +129,7 @@ $(function () {
     console.log(id);
     $.ajax({
         type: "DELETE",
-        url: "http://localhost/WTFinalProject/Admin2/Mbos/products/" + id,
+        url: "http://localhost/Mommy-Baby-Online-Shopping/Mbos/products/" + id,
         dataType: "json",
         success: function (data, status) {
             if (data.status == "success"){
@@ -157,13 +157,13 @@ $(function () {
         console.log(formData);
 
         $.ajax({
-            url: "http://localhost/WTFinalProject/Admin2/Mbos/products/",
+            url: "http://localhost/Mommy-Baby-Online-Shopping/Mbos/products/",
             type: "POST",
             data: formData,
             dataType: "json",
 
             success: function (data, status, xhr) {
-                if (data == 'done') {
+                if (data == "success") {
                     alert('New products are successfully added!');
                 }
             },
