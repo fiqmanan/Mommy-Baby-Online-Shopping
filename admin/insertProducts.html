@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <title>Insert New Products</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <br /><br />
+    <div class="container" style="width:600px;">
+        <h2 align="center">Form to insert new products</h2><br /><br />
+        <form method="post" id="insert_products" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Enter Product Name</label>
+                <input type="text" name="productName" id="productName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" id="category">
+                    <option value="0">Mother Clothes</option>
+                    <option value="1">Baby Clothes</option>
+                    <option value="2">Electronics</option>
+                    <option value="3">Others</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Company</label>
+                <select name="productCompany" id="productCompany" required>
+                    <option value="0">BabyMommy.co sdn bhd</option>
+                    <option value="1">MyBabies sdn bhd</option>
+                    <option value="2">MommyLovers.co</option>
+                    <option value="3">BabiesHaul sdn bhd</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Price per unit</label>
+                <input type="number" name="productPrice" id="productPrice" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Product Image</label>
+                <input type="file" name="productImage" id="productImage" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Date Arrived</label>
+                <input type="date" name="DateArrived" id="DateArrived" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Description of Products</label>
+                <input type="text" name="productDescription" id="productDescription" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Colors</label>
+                <input type="text" name="productColor" id="productColor" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <select name="productQuantity" id="productQuantity">
+                    <option value="150">150</option>
+                    <option value="350">350</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Product Availability</label>
+                <select name="productAvailability" id="productAvailability">
+                    <option value="0">In Stock</option>
+                    <option value="1">Not in stock</option>
+                </select>
+            </div>
+            <br />
+            <div align='center'>
+                <input type="submit" name="insert" id="action" class="btn btn-info" value="Insert" />
+                
+            </div>
+        </form>
+        <input type="submit" name="home" id="action" class="btn btn-warning" value="Return to Main Page" onClick="index()" />
+    </div>
+</body>
+
+</html>
+
+<script src="script.js"></script>
+<script>
+    function index() {
+        window.open("index.html");
+    }
+</script>
