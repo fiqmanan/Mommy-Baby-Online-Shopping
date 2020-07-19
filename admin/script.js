@@ -19,7 +19,7 @@ $(function () {
             success: function (data, status, xhr) {
                 if (data.status == "success") {
                     alert("Login Successfully");
-                    window.location.replace("main.html");
+                    window.location.replace("main.php");
                 }
                 else {
                     alert('Failed to Login');
@@ -49,7 +49,7 @@ $(function () {
             success: function (data, status, xhr) {
                 if (data.status == "success") {
                     alert("Successfully Register the Admin");
-                    window.location.replace("index.html");
+                    window.location.replace("index.php");
                 }
                 else {
                     alert('Not Register, Something when wrong');
@@ -112,7 +112,7 @@ $(function () {
                     "   <td id='DATE'>" + data[x].DateArrived + "</td>" +
                     "   <td id='AVAI'>" + Availability + "</td>" +
                     "   <td> <div align = 'center'><img src='images/delete.png' height='20'></div></td>" +
-                    "   <td> <div align = 'center'><a href='updateProducts.html?id="+data[x].id+"'>Update</a></div></td>" +
+                    "   <td> <div align = 'center'><a href='updateProducts.php?id="+data[x].id+"'>Update</a></div></td>" +
                     "</tr>");
             }
         },

@@ -1,5 +1,13 @@
-<html>
+<?php 
+    session_start();
+    if(isset($_SESSION['login']) == NULL) 
+    {
+        echo'<script>alert("please log in first!")</script>';
+        header("location: login.php");
+    }
+?>
 
+<html lang="en">
 <head>
     <title>Insert New Products</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -88,6 +96,6 @@
 <script src="script.js"></script>
 <script>
     function index() {
-        window.open("main.html");
+        window.open("main.php");
     }
 </script>

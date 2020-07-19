@@ -1,5 +1,13 @@
-<html lang="en">
+<?php 
+    session_start();
+    if(isset($_SESSION['login']) == NULL) 
+    {
+        echo'<script>alert("please log in first!")</script>';
+        header("location: login.php");
+    }
+?>
 
+<html lang="en">
 <head>
     <!-- Meta -->
     <meta charset="utf-8">

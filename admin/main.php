@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if(isset($_SESSION['login']) == NULL) 
+    {
+        echo'<script>alert("please log in first!")</script>';
+        header("location: login.php");
+    }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -102,23 +110,25 @@
     <div class="head">
         <h2><a class="active" href="http://localhost/Mommy-Baby-Online-Shopping/admin/index.html">ADMIN</a>|<em>Manage Products</em></h2>
          <ul class="nav pull-right">
+
             <li class="nav-user dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="images/admin.png" class="nav-avatar" width="50" height="50"/>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/main.html">Home</a></li>
-                     <li class="divider"></li>
-                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/insertProducts.html">Insert New Product</a></li>
-                     <li class="divider"></li>
+                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/main.php">Home</a></li>
+                    <li class="divider"></li>
+                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/insertProducts.php">Insert New Product</a></li>
+                    <li class="divider"></li>
                     <li><a href="http://localhost/Mommy-Baby-Online-Shopping/Shopping/managecustomer.php">Manage Customer</a></li>
                     <li class="divider"></li>
-                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/registerAdmin.html">Add New Admin</a></li>
+                    <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/registerAdmin.php">Add New Admin</a></li>
                     <li class="divider"></li>
                     <li><a href="http://localhost/Mommy-Baby-Online-Shopping/admin/logout.php">Logout</a></li>
                 </ul>
             </li>
+
         </ul>
         
     </div>
