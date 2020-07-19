@@ -46,7 +46,7 @@ $app->post('/api2/login', function (Request $request, Response $response, array 
         
         $_SESSION['login']=$_POST['email'];
 		$_SESSION['id']= $user['id'];
-        $_SESSION['username']=$user['name'];
+        $_SESSION['username']=$user['username'];
 
         echo json_encode($data);
         }
