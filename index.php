@@ -376,12 +376,9 @@ $app->delete('/api2/deleteItem/{cartId}', function (Request $request, Response $
 //===================================UpdateQuantity==========================================
 $app->put('/api2/updateCart/{cartId}', function (Request $request, Response $response, array $args) {
     
-    $quantity = $request->getParam('quantity');
     $cartId = $args['cartId'];
+    $quantity = $request->getParam('quantity');
     $sql = "UPDATE cart SET quantity= :quantity WHERE cartId=$cartId";
-    
-    // $cartId = $args['cartId'];
-    // $sql="SELECT * FROM cart WHERE cartId = $cartId";
 
     try{
         //Get DB Object
@@ -520,6 +517,44 @@ $app->put('/api2/payment/{id}', function (Request $request, Response $response, 
     }catch(PDOException $e){
         $data = array(
             "status" => $e
+        );
+        echo json_encode($data);
+    }
+});
+
+//===================================Add To Cart==========================================
+$app->post('/api2/addtocart/{id}', function (Request $request, Response $response, array $args) {
+
+    $userId		= $request->getAttribute('id');    
+    $productName= $_POST["productName"];
+    $price      = $_POST["price"];
+    $quantity   = "1";
+    $paymentStatus   = "";
+
+    try {
+        $sql = "INSERT INTO cart (userId,productName,price,quantity,paymentStatus) VALUES (:userId,:productName,:price,:quantity,:paymentStatus)";
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $userId);
+        $stmt->bindValue(':productName', $productName);
+        $stmt->bindValue(':price', $price);
+        $stmt->bindValue(':quantity', $quantity);
+        $stmt->bindValue(':paymentStatus', $paymentStatus);
+    
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $db = null;
+    
+        $data = array(
+            "status" => "success",
+            "rowcount" =>$count
+        );
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        $data = array(
+            "status" => "fail"
         );
         echo json_encode($data);
     }

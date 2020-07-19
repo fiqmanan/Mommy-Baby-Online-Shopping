@@ -120,7 +120,7 @@
 	$(function () {
 		getLatestCart();
 
-		//=======================RESTFUL API GET - LIST CART===============================
+	//=======================RESTFUL API GET - LIST CART===============================
 		function getLatestCart(){			
             $.ajax({
                   type: "GET",
@@ -137,16 +137,18 @@
 							var tot = 0;
 							for (let x = 0; x < data.length; x++) 
 							{
+								
 								$("#tabledata tbody").append("<tr>" +
 								"   <td id='id' style='display:none;'>" + data[x].cartId + "</td>" +
 								"   <td>" + data[x].productName + "</td>" +
-								"   <td>" + data[x].quantity + "</td>" +
+								"   <td>" + "<input type='number' id='quantityup' name='quantityup' min='0' max='100' step='1'>" +"</td>" +
 								"   <td id='price'>" + data[x].price + "</td>" +
 								"   <td >" + '<button style="background-color: red;"><a style="color:white;" href="#">REMOVE</a></button>' + "</td>" +
 								"</tr>");
 
-								$("#quantity").val(data[x].quantity);
-								var mul = data[x].price * data[x].quantity;
+								$("#quantityup").val(data[x].quantity);
+								var bil = $("#quantityup").val();
+								var mul = data[x].price * bil;
 								tot += mul;
 							}
 							document.querySelector('#totalAmount').innerHTML = tot;							
@@ -165,17 +167,23 @@
 	$('#tabledata tbody').on('click', 'input', function () {
 		var parentTR = $(this).parent().parent().parent().parent();
         cartId = parentTR.find('#id').html();
+		quantityup = parentTR.find('#quantityup').html();
 		$.ajax({
                 type: "PUT",
                 url: "http://localhost/Mommy-Baby-Online-Shopping/api2/updateCart/" + cartId,
-                dataType: "json",
+                data: 
+				{ 
+					quantity: $("#quantityup").val(), 
+				},
                 success: function (data, status) {
                     if (status == "success"){
-                        alert("Edit succeed");
+                        //alert("Edit succeed");
+						location.reload();
                     }
                     else {
                         alert("Edit failed - no record found with the given ID");
                     }
+					
                 },
                 error: function () {
                     alert("error" + status);

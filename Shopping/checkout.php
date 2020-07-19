@@ -289,7 +289,7 @@
 	$(function () {
 		getLatestCart();
 
-		//=======================RESTFUL API GET - TOTAL PRICE===============================
+		//=======================RESTFUL API GET - LIST CART===============================
 		function getLatestCart(){			
             $.ajax({
                   type: "GET",

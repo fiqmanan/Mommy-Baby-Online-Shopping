@@ -1,6 +1,14 @@
 <?php
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "shopping";
+$bd = mysqli_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Could not connect database");
+mysqli_select_db($bd,$mysql_database) or die("Could not select database");
+?>
+<?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 include('includes/config.php');
 $cid=intval($_GET['cid']);
 if(isset($_GET['action']) && $_GET['action']=="add"){
@@ -9,9 +17,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 		$_SESSION['cart'][$id]['quantity']++;
 	}else{
 		$sql_p="SELECT * FROM products WHERE id={$id}";
-		$query_p=mysql_query($sql_p);
-		if(mysql_num_rows($query_p)!=0){
-			$row_p=mysql_fetch_array($query_p);
+		$query_p=mysqli_query($sql_p);
+		if(mysqli_num_rows($query_p)!=0){
+			$row_p=mysqli_fetch_array($query_p);
 			$_SESSION['cart'][$row_p['id']]=array("quantity" => 1, "price" => $row_p['productPrice']);
 			header('location:my-cart.php');
 		}else{
@@ -27,7 +35,7 @@ header('location:login.php');
 }
 else
 {
-mysql_query("insert into wishlist(userId,productId) values('".$_SESSION['id']."','".$_GET['pid']."')");
+mysqli_query("insert into wishlist(userId,productId) values('".$_SESSION['id']."','".$_GET['pid']."')");
 echo "<script>alert('Product aaded in wishlist');</script>";
 header('location:my-wishlist.php');
 
@@ -116,9 +124,9 @@ header('location:my-wishlist.php');
   
         <ul class="nav">
             <li class="dropdown menu-item">
-              <?php $sql=mysql_query("select id,subcategory  from subcategory where categoryid='$cid'");
+              <?php $sql=mysqli_query($bd,"select id,subcategory  from subcategory where categoryid='$cid'");
 
-while($row=mysql_fetch_array($sql))
+while($row=mysqli_fetch_array($sql))
 {
     ?>
                 <a href="sub-category.php?scid=<?php echo $row['id'];?>" class="dropdown-toggle"><i class="icon fa fa-desktop fa-fw"></i>
@@ -139,8 +147,8 @@ while($row=mysql_fetch_array($sql))
 		<h4 class="widget-title">Category</h4>
 	</div>
 	<div class="sidebar-widget-body m-t-10">
-	         <?php $sql=mysql_query("select id,categoryName  from category");
-while($row=mysql_fetch_array($sql))
+	         <?php $sql=mysqli_query($bd,"select id,categoryName  from category");
+while($row=mysqli_fetch_array($sql))
 {
     ?>
 		<div class="accordion">
@@ -156,9 +164,6 @@ while($row=mysql_fetch_array($sql))
 	</div><!-- /.sidebar-widget-body -->
 </div><!-- /.sidebar-widget -->
 
-
-
-    
 <!-- ============================================== COLOR: END ============================================== -->
 
 	            	</div><!-- /.sidebar-filter -->
@@ -174,101 +179,82 @@ while($row=mysql_fetch_array($sql))
 			</div>
 			<div class="container-fluid">
 				<div class="caption vertical-top text-left">
-					<div class="big-text">
-						<br />
+					<div class="big-text"><br />
 					</div>
-
-					       <?php $sql=mysql_query("select categoryName  from category where id='$cid'");
-while($row=mysql_fetch_array($sql))
-{
-    ?>
-
-					<div class="excerpt hidden-sm hidden-md">
-						<?php echo htmlentities($row['categoryName']);?>
-					</div>
-			<?php } ?>
-			
+						<?php $sql=mysqli_query($bd,"select categoryName  from category where id='$cid'");
+						while($row=mysqli_fetch_array($sql))
+						{?>
+						<div class="excerpt hidden-sm hidden-md">
+							<?php echo htmlentities($row['categoryName']);?>
+						</div>
+							<?php } ?>
 				</div><!-- /.caption -->
 			</div><!-- /.container-fluid -->
 		</div>
-</div>
+	</div>
 
 				<div class="search-result-container">
 					<div id="myTabContent" class="tab-content">
 						<div class="tab-pane active " id="grid-container">
 							<div class="category-product  inner-top-vs">
 								<div class="row">									
-			<?php
-$ret=mysql_query("select * from products where category='$cid'");
-$num=mysql_num_rows($ret);
-if($num>0)
-{
-while ($row=mysql_fetch_array($ret)) 
-{?>							
-		<div class="col-sm-6 col-md-4 wow fadeInUp">
-			<div class="products">				
-	<div class="product">		
-		<div class="product-image">
-			<div class="image">
-				<a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><img  src="assets/images/blank.gif" data-echo="admin/productimages/<?php echo htmlentities($row['productName']);?>/<?php echo htmlentities($row['productImage1']);?>" alt="" width="200" height="300"></a>
-			</div><!-- /.image -->			                      		   
-		</div><!-- /.product-image -->
-			
-		
-		<div class="product-info text-left">
-			<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities($row['productName']);?></a></h3>
-			<div class="rating rateit-small"></div>
-			<div class="description"></div>
+									<?php
+									$ret=mysqli_query($bd,"select * from products where category='$cid'");
+									$num=mysqli_num_rows($ret);
+									if($num>0)
+									{
+									while ($row=mysqli_fetch_array($ret)) 
+									{?>							
+									<div class="col-sm-6 col-md-4 wow fadeInUp">
+										<div class="products">				
+											<div class="product">		
+												<div class="product-image">
+													<div class="image">
+														<a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+														<img  src="assets/images/blank.gif" data-echo="admin/productimages/<?php echo htmlentities($row['productName']);?>/<?php echo htmlentities($row['productImage1']);?>" alt="" width="200" height="300"></a>
+													</div><!-- /.image -->			                      		   
+												</div><!-- /.product-image -->
+												<div class="product-info text-left">
+													<input id="productName" type="hidden" name="productName" value="<?php echo htmlentities($row['productName']);?>" />
+													<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities($row['productName']);?></a></h3>
+													<div class="rating rateit-small"></div>
+													<div class="description"></div>
+													<div class="product-price">	
+														<input id="price" type="hidden" name="price" value="<?php echo htmlentities($row['productPrice']);?>" />
+														<span class="price">
+															Rs. <?php echo htmlentities($row['productPrice']);?>			
+														</span>
+										     			<span class="price-before-discount">Rs. <?php echo htmlentities($row['productPriceBeforeDiscount']);?></span>
+													</div><!-- /.product-price -->
+												</div><!-- /.product-info -->
+												<div class="cart clearfix animate-effect">
+													<div class="action">
+														<ul class="list-unstyled">
+															<li class="add-cart-button btn-group">
+																<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
+																	<i class="fa fa-shopping-cart"></i>													
+																</button>
+																<!-- <a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>">
+																<button class="btn btn-primary" type="button">Add to cart</button></a> -->
 
-			<div class="product-price">	
-				<span class="price">
-					Rs. <?php echo htmlentities($row['productPrice']);?>			</span>
-										     <span class="price-before-discount">Rs. <?php echo htmlentities($row['productPriceBeforeDiscount']);?></span>
-									
-			</div><!-- /.product-price -->
-			
-		</div><!-- /.product-info -->
-					<div class="cart clearfix animate-effect">
-				<div class="action">
-					<ul class="list-unstyled">
-						<li class="add-cart-button btn-group">
-							<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-								<i class="fa fa-shopping-cart"></i>													
-							</button>
-							<a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>">
-							<button class="btn btn-primary" type="button">Add to cart</button></a>
-													
-						</li>
-	                   
-		                <li class="lnk wishlist">
-							<a class="add-to-cart" href="category.php?pid=<?php echo htmlentities($row['id'])?>&&action=wishlist" title="Wishlist">
-								 <i class="icon fa fa-heart"></i>
-							</a>
-						</li>
-
-						
-					</ul>
-				</div><!-- /.action -->
-			</div><!-- /.cart -->
-			</div>
-			</div>
-		</div>
-	  <?php } } else {?>
-	
+																<button class="btn btn-primary" type="button" id="addtocart">Add to cart</button>
+															</li>
+															<li class="lnk wishlist">
+																<a class="add-to-cart" href="category.php?pid=<?php echo htmlentities($row['id'])?>&&action=wishlist" title="Wishlist">
+																	<i class="icon fa fa-heart"></i>
+																</a>
+															</li>
+														</ul>
+													</div><!-- /.action -->
+												</div><!-- /.cart -->
+											</div>
+										</div>
+									</div>
+	  	<?php } } else {?>
 		<div class="col-sm-6 col-md-4 wow fadeInUp"> <h3>No Product Found</h3>
 		</div>
-		
 <?php } ?>	
-		
-	
-		
-		
-	
-		
-	
-		
-	
-		
+
 										</div><!-- /.row -->
 							</div><!-- /.category-product -->
 						
@@ -317,6 +303,25 @@ while ($row=mysql_fetch_array($ret))
 		$(window).bind("load", function() {
 		   $('.show-theme-options').delay(2000).trigger('click');
 		});
+		
+		//=======================RESTFUL API POST- Add to cart===============================
+		$('#addtocart').click(function () {
+            $.ajax({
+			type: "POST",
+			url: "http://localhost/Mommy-Baby-Online-Shopping/api2/addtocart/"+ <?php echo $_SESSION['id'] ?> ,
+			data: 
+			{ 
+				productName: $("#productName").val(), // < note use of 'this' here
+				price: $("#price").val(),
+			},
+			success: function(result) {
+				alert("Item Added !");
+			},
+			error: function(result) {
+				alert('error');
+			}
+		});
+         });
 	</script>
 	<!-- For demo purposes – can be removed on production : End -->
 
