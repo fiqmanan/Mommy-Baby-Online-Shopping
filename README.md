@@ -5,6 +5,7 @@ Given Tasks:
 2. Shopping Cart - Izzaty
 3. Payment - Jia
 4. Manage Product (Admin) - Atikah
+5. TRY commit changes from github!
 
 Version 0.1
 1) Please ensure to import the database into XAMPP (PhpmyAdmin) before run the program since the program will only can be execute if the database had being setup
